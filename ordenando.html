@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Ordenação de Valores</title>
+    <script src="ordenando.js"></script>
+    <script>
+        // Função para adicionar valor à lista
+        function add() {
+            const valorInput = document.getElementById('valor');
+            const valor = parseInt(valorInput.value);
+
+            const listaValores = document.getElementById('valores');
+            const node = document.createElement('li');
+            node.textContent = valor;
+
+            listaValores.appendChild(node);
+
+            valorInput.value = '';
+        
+        }
+
+        // Função para ordenar a lista de valores
+        function ordenar() {
+            const listaValores = document.getElementById('valores');
+            const items = Array.from(listaValores.getElementsByTagName('li'));
+
+            // Criar um array com os valores atuais convertidos para inteiros
+            const valores = items.map(item => parseInt(item.textContent));
+
+            // Capturar o tipo de ordenação selecionado
+            const tipoOrdenacao = document.getElementById('tipoOrdenacao').value;
+
+            // Escolher o algoritmo de ordenação
+            switch (tipoOrdenacao) {
+                case 'bubble':
+                    bubble_sort(valores);
+                    break;
+                case 'selection':
+                    selection_sort(valores);
+                    break;
+                case 'quick':
+                    quick_sort(valores);
+                    break;
+                default:
+                    // Caso padrão, usar Bubble Sort
+                    bubble_sort(valores);
+                    break;
+            }
+
+            // Atualizar os valores na lista de valores
+            listaValores.innerHTML = valores.map(valor => `<li>${valor}</li>`).join('');
+        }
+
+        // Função para misturar a lista de valores
+        function misturar() {
+            const listaValores = document.getElementById('valores');
+            const items = Array.from(listaValores.getElementsByTagName('li'));
+
+            // Criar um array com os valores atuais convertidos para inteiros
+            const valores = items.map(item => parseInt(item.textContent));
+
+            // Aplicar a função de embaralhar (shuffle)
+            shuffle(valores, valores.length * 2); // Realiza um número suficiente de trocas
+
+            // Atualizar os valores na lista de valores
+            listaValores.innerHTML = valores.map(valor => `<li>${valor}</li>`).join('');
+        }
+    </script>
+</head>
+<body>
+    <h2>Ordenação de Valores</h2>
+    
+    <label for="valor">Valor:</label>
+    <input type="number" id="valor">
+    <button onclick="add()">Adicionar</button>
+    
+    <br><br>
+    
+    <label for="tipoOrdenacao">Escolha o tipo de ordenação:</label>
+    <select id="tipoOrdenacao">
+        <option value="bubble" selected>Bubble Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="quick">Quick Sort</option>
+    </select>
+    <button onclick="ordenar()">Ordenar</button>
+    
+    <br><br>
+    
+    <button onclick="misturar()">Misturar</button>
+    
+    <br><br>
+    
+    <ul id="valores">
+        <!-- Os valores serão adicionados dinamicamente -->
+    </ul>
+</body>
+</html>

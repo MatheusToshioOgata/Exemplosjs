@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Receitas</title>
+    <!-- Incluir folha de estilos do Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container-fluid {
+            background-color: #ffc107; /* bg-warning */
+        }
+        .pnlCatalogo {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body onload="preencheCatalogo()">
+    <div class="container-fluid">
+        <h1>Catálogo de Receitas</h1>
+        <div id="pnlCatalogo" class="pnlCatalogo">
+            <!-- Os cards de receitas serão inseridos aqui via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Incluir script JavaScript -->
+    <script>
+        // Dados das receitas em formato JSON
+        const receitas = [
+            {
+                titulo: "Bolo de Chocolate",
+                imagem: "bolo_chocolate.png",
+                preparo: "Pré-aqueça o forno a 180°C. Unte e enfarinhe uma forma. Em uma tigela, peneire a farinha de trigo, o açúcar e o chocolate em pó. Adicione os ovos e o leite à mistura e bata bem até obter uma massa homogênea. Despeje a massa na forma preparada e leve ao forno por aproximadamente 40 minutos, ou até que ao enfiar um palito no centro do bolo, ele saia limpo. Retire do forno, deixe esfriar um pouco, desenforme e sirva.",
+                ingredientes: ["Farinha", "Açúcar", "Chocolate em pó", "Ovos", "Leite"]
+            },
+            {
+                titulo: "Salada de Frutas",
+                imagem: "salada_frutas.png",
+                preparo: "Descasque e corte as frutas em pedaços pequenos. Coloque todos os ingredientes em uma tigela grande. Misture delicadamente para combinar as frutas. Leve à geladeira por pelo menos 30 minutos antes de servir para que a salada de frutas fique bem gelada e os sabores se misturem. Sirva em seguida como sobremesa ou acompanhamento.",
+                ingredientes: ["Banana", "Maçã", "Morango", "Kiwi", "Laranja"]
+            },
+            {
+                titulo: "Lasanha à Bolonhesa",
+                imagem: "lasanha_bolonhesa.png",
+                preparo: "Cozinhe as folhas de massa de lasanha conforme as instruções da embalagem. Para o molho bolonhesa, aqueça o azeite em uma panela grande em fogo médio. Adicione a cebola e o alho, refogando até ficarem macios. Adicione a carne moída e cozinhe até dourar. Tempere com sal, pimenta, orégano e manjericão a gosto. Acrescente o molho de tomate e deixe cozinhar por cerca de 15 minutos em fogo baixo, mexendo ocasionalmente. Em um refratário grande, monte camadas alternadas de massa de lasanha cozida, molho bolonhesa e queijo muçarela ralado. Repita até acabarem os ingredientes, finalizando com uma camada de queijo. Leve ao forno preaquecido a 180°C por aproximadamente 30 minutos, ou até que o queijo esteja derretido e borbulhante. Retire do forno, deixe descansar por alguns minutos, sirva quente e aproveite!",
+                ingredientes: [
+                    "Folhas de massa de lasanha",
+                    "500g de carne moída",
+                    "1 cebola picada",
+                    "2 dentes de alho picados",
+                    "1 lata de molho de tomate",
+                    "Azeite de oliva",
+                    "Sal e pimenta a gosto",
+                    "Orégano e manjericão fresco a gosto",
+                    "Queijo muçarela ralado"
+                ]
+            }
+            // Adicione mais receitas conforme necessário
+        ];
+
+        // Função para obter a lista de ingredientes em formato HTML
+        function getListaIngredientes(receita) {
+            const listaHTML = `<ul>${receita.ingredientes.map(ingrediente => `<li>${ingrediente}</li>`).join('')}</ul>`;
+            return listaHTML;
+        }
+
+        // Função para gerar o card de uma receita
+        function getCard(receita) {
+            const cardHTML = `
+                <div class="card" style="width: 250px;">
+                    <img src="${receita.imagem}" class="card-img-top" alt="${receita.titulo}">
+                    <div class="card-body">
+                        <h5 class="card-title">${receita.titulo}</h5>
+                        <div class="card-text">
+                            ${getListaIngredientes(receita)}
+                            <hr>
+                            ${receita.preparo}
+                        </div>
+                    </div>
+                </div>
+            `;
+            return cardHTML;
+        }
+
+        // Função para preencher o catálogo de receitas
+        function preencheCatalogo() {
+            const pnlCatalogo = document.getElementById('pnlCatalogo');
+            const receitasHTML = receitas.map(receita => getCard(receita)).reduce((acc, card) => acc + card, '');
+            pnlCatalogo.innerHTML = receitasHTML;
+        }
+    </script>
+</body>
+</html>
